@@ -1,0 +1,69 @@
+import customtkinter as ctk
+from PIL import Image, ImageTk
+
+# Initialize the app
+ctk.set_appearance_mode("System")
+ctk.set_default_color_theme("blue")
+
+app = ctk.CTk()
+app.title("Textiles of India")
+app.geometry("1200x700")
+
+# Function to create an image label
+def create_image_label(frame, image_path, text):
+    image = Image.open(image_path).resize((180, 150))
+    img = ImageTk.PhotoImage(image)
+
+    label_frame = ctk.CTkFrame(frame)
+    label_frame.pack(side="left", padx=10, pady=10)
+
+    label = ctk.CTkLabel(label_frame, image=img, text="")
+    label.image = img  # Keep a reference to avoid garbage collection
+    label.pack()
+
+    text_label = ctk.CTkLabel(label_frame, text=text, font=("Arial", 14))
+    text_label.pack()
+
+# Scrollable canvas
+canvas_frame = ctk.CTkScrollableFrame(app, width=1000, height=500)
+canvas_frame.pack(pady=20)
+
+# Header
+header_label = ctk.CTkLabel(app, text="TEXTILES OF INDIA", font=("Arial", 24, "bold"))
+header_label.pack(pady=10)
+
+# Search Bar
+search_frame = ctk.CTkFrame(app)
+search_frame.pack(pady=5)
+
+search_entry = ctk.CTkEntry(search_frame, placeholder_text="Search", width=300)
+search_entry.pack(side="left", padx=5)
+
+search_button = ctk.CTkButton(search_frame, text="Search")
+search_button.pack(side="left", padx=5)
+
+# Side Menu
+menu_frame = ctk.CTkFrame(app, width=200)
+menu_frame.pack(side="left", padx=10, pady=10)
+
+buttons = ["New Collection", "Special Promo", "Hand Woven", "History"]
+for button_text in buttons:
+    btn = ctk.CTkButton(menu_frame, text=button_text, width=180)
+    btn.pack(pady=5)
+
+# Image display
+create_image_label(canvas_frame, "kancheepuram.jpg", "Kancheepuram Silk Sarees")
+create_image_label(canvas_frame, "paithani.jpg", "Paithani Sarees")
+create_image_label(canvas_frame, "chanderi.jpg", "Chanderi Silk Sarees")
+
+# Footer navigation buttons
+footer_frame = ctk.CTkFrame(app)
+footer_frame.pack(pady=10)
+
+nav_buttons = ["Home", "Cart", "Pre Order", "About", "Contact"]
+for nav in nav_buttons:
+    nav_btn = ctk.CTkButton(footer_frame, text=nav, width=100)
+    nav_btn.pack(side="left", padx=5)
+
+# Run the app
+app.mainloop()
